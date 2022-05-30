@@ -1,0 +1,16 @@
+{
+  "dependencies": {
+    "didyoumean2": "^5.0.0",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "fb-messenger-bot-api": "^4.4.0",
+    "languagedetect": "^2.0.0",
+    "lz-string": "^1.4.4",
+    "mqtt": "^4.3.7",
+    "nodemon": "^2.0.16",
+    "request": "^2.88.2",
+    "sentence-intent": "^0.0.4",
+    "tasktimer": "^3.0.0",
+    "underscore": "^1.13.2"
+  }
+}

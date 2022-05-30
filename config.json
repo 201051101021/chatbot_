@@ -1,0 +1,267 @@
+{
+  "mqtt": {
+    "host": "ex",
+    "port": "ex",
+    "user": "ex",
+    "pass": "ex"
+  },
+  "auth": {
+    "PAGE_ACCESS_TOKEN": "ex",
+    "VERIFY_TOKEN": "ex"
+  },
+  "device": [
+    {
+      "name": "light1",
+      "topic": "zigbee2mqtt/Tuya Switch/set",
+      "turn_off_message": "OFF",
+      "turn_on_message": "ON",
+      "EN": [
+        "light"
+      ],
+      "TH": [
+        "ไฟ",
+        "หลอดไฟ"
+      ]
+    },
+    {
+      "name": "computer1",
+      "topic": "desk/pcswitch/action",
+      "turn_off_message": "off",
+      "turn_on_message": "on",
+      "EN": [
+        "computer",
+        "pc"
+      ],
+      "TH": [
+        "คอม",
+        "คอมพิวเตอร์"
+      ]
+    },
+    {
+      "name": "plug",
+      "topic": "plug2/control",
+      "turn_off_message": "off",
+      "turn_on_message": "on",
+      "EN": [
+        "plug"
+      ],
+      "TH": [
+        "ปลั๊ก",
+        "ปลั๊กไฟ"
+      ]
+    },
+    {
+      "name": "air1",
+      "topic": "bedroom/air/action",
+      "turn_off_message": "turn_off: 'off'",
+      "turn_on_message": "turn_on: 'on'",
+      "EN": [
+        "air"
+      ],
+      "TH": [
+        "แอร์"
+      ]
+    },
+    {
+      "name": "airpurifier",
+      "topic": "bedroom/airpurifier/action",
+      "turn_off_message": "off",
+      "turn_on_message": "on",
+      "EN": [
+        "airpurify",
+        "air purify",
+        "purify"
+      ],
+      "TH": [
+        "ฟอก",
+        "เครื่องฟอก",
+        "เครื่องฟอกอากาศ"
+      ]
+    }
+  ],
+  "intent": {
+    "turn_off": {
+      "EN": [
+        "off",
+        "close",
+        "turn off"
+      ],
+      "TH": [
+        "ปิด"
+      ]
+    },
+    "turn_on": {
+      "EN": [
+        "on",
+        "open",
+        "turn on"
+      ],
+      "TH": [
+        "เปิด"
+      ]
+    },
+    "settemp": {
+      "EN": [
+        "settemp",
+        "set temp",
+        "temp",
+        "temperature"
+      ],
+      "TH": [
+        "ตั้งอุณหภูมิ",
+        "ปรับ",
+        "อุณหภูมิ"
+      ]
+    },
+    "setmode": {
+      "EN": [
+        "setmode",
+        "set mode",
+        "mode"
+      ],
+      "TH": [
+        "ตั้งโหมด",
+        "ปรับโหมด",
+        "โหมด"
+      ]
+    },
+    "detailDevice": {
+      "EN": [
+        "detail"
+      ],
+      "TH": [
+        "รายละเอียด"
+      ]
+    },
+    "greeting": {
+      "EN": [
+        "hello",
+        "hi"
+      ],
+      "TH": [
+        "สวัสดี",
+        "ดีคับ",
+        "หวัดดี"
+      ]
+    },
+    "help": {
+      "EN": [
+        "help"
+      ],
+      "TH": [
+        "ทำอะไรได้บ้าง",
+        "ทำอะไรได้",
+        "ทำไรได้",
+        "ช่วยเหลือ"
+      ]
+    },
+    "command": {
+      "EN": [
+        "all command",
+        "command"
+      ],
+      "TH": [
+        "คำสั่งทั้งหมด",
+        "คำสั่ง"
+      ]
+    },
+    "thank": {
+      "EN": [
+        "thank",
+        "thanks",
+        "thank you",
+        "thank you very much"
+      ],
+      "TH": [
+        "ขอบคุณ",
+        "ขอบคุณครับ",
+        "ขอบคุณค่ะ"
+      ]
+    },
+    "maprang": {
+      "EN": [
+        "MaPrang",
+        "What is MaPrang"
+      ],
+      "TH": [
+        "มะปราง",
+        "มะปราง คืออะไร"
+      ]
+    }
+  },
+  "responding": {
+    "greeting": {
+      "EN": [
+        "Hello",
+        "Hi"
+      ],
+      "TH": [
+        "สวัสดี"
+      ]
+    },
+    "thank": {
+      "EN": [
+        "My pleasure"
+      ],
+      "TH": [
+        "ยินดีเสมอ"
+      ]
+    },
+    "sorry": {
+      "EN": [
+        "Apologize"
+      ],
+      "TH": [
+        "ขออภัย"
+      ]
+    },
+    "help": {
+      "EN": [
+        "You can sent messages to control device (ex. turn on light ,detail light, all command)"
+      ],
+      "TH": [
+        "คุณสามารถใช้งานได้ เช่น พิมพ์ว่า'เปิดไฟ' 'รายละเอียดไฟ' 'คำสั่งทั้งหมด'"
+      ]
+    },
+    "command": {
+      "EN": [
+        "all command \n turn on light \n turn off light \n set temperature \n set mode\n detail \n help"
+      ],
+      "TH": [
+        "คำสั่งทั้งหมด \n เปิด \n ปิด \n ตั้งอุณหภูมิ \n ปรับโหมด \n รายละเอียด \n ช่วยเหลือ"
+      ]
+    },
+    "no_permission": {
+      "EN": [
+        "I apologized, You don't have the right, Kindly contact our admin."
+      ],
+      "TH": [
+        "ขออภัย คุณไม่มีสิทธิ์ใช้งานกรุณาติดต่อผู้ดูแลระบบ"
+      ]
+    },
+    "unknown": {
+      "EN": [
+        "I apologized, I don't understand command. Did you mean "
+      ],
+      "TH": [
+        "ขออภัย ไม่เข้าใจคำสั่ง หรือคุณหมายถึง "
+      ]
+    },
+    "declined": {
+      "EN": [
+        "I apologized, Your request is declined."
+      ],
+      "TH": [
+        "ขออภัย คำขอของคุณถูกปฏิเสธ"
+      ]
+    },
+    "maprang": {
+      "EN": [
+        "MaPrang is chatbot"
+      ],
+      "TH": [
+        "มะปราง คือ แชทบอท"
+      ]
+    }
+  }
+}

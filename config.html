@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Config</title>
+  <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <link rel="stylesheet" id="theme-link" />
+  <link rel="stylesheet" id="iconlib-link" />
+</head>
+
+<body>
+  <div class="container grid-xl">
+    <h1>Setting</h1>
+    <span id='valid_indicator' class='label'></span>
+    <div id="json-editor-form"></div>
+
+    <a class="btn btn-primary" id="build">Save</a>
+    <a class="btn btn-secondary" href="?">reset</a>
+
+    <script>
+
+      var defaultSchema = {
+        title: "Setting",
+        type: "object",
+        required: ["mqtt", "auth", "device", "intent", "responding"],
+        properties: {
+          mqtt: {
+
+            type: "object",
+            title: "MQTT",
+
+            properties: {
+              host: {
+                type: "string",
+                description: "MQTT HOST",
+                default: "171.96.229.127"
+              },
+              port: {
+                type: "string",
+                description: "MQTT PORT",
+                default: "1883",
+              },
+              user: {
+                type: "string",
+                description: "MQTT USER",
+                default: "testtesttest",
+              },
+              pass: {
+                type: "string",
+                description: "MQTT PASSWORD",
+                format: "password",
+                default: "testtesttest",
+              },
+            },
+          },
+
+          auth: {
+            type: "object",
+            title: "Auth",
+
+            properties: {
+              PAGE_ACCESS_TOKEN: {
+                type: "string",
+                description: "PAGE_ACCESS_TOKEN",
+                default:
+                  "EAACZCD8tSQEwBAKo4c9xk75qFlqM6pkpKZCKpmntwtned0nAmZAbmAfZCopPDLqClbajLxdsnLaHZCPZCd7YnriAVtbZB1oHvfFgFLI3Ir99bHOC4lX3ZBDCGelc9NwiSg1NxvkOMDw72SEu2NDO2hPp2gInawOg5TTBSNOrxuODHX3HG7ayDxAZCVPZC3tIJ3ZBviiNLqD13eZCzwZDZD",
+              },
+              VERIFY_TOKEN: {
+                type: "string",
+                description: "VERIFY_TOKEN",
+                default: "Password",
+              },
+              
+            },
+          },
+
+          device: {
+            type: "array",
+            title: "Device",
+            format: "tabs",
+            items: {
+              type: "object",
+              title: "Device",
+              properties: {
+                name: {
+                  type: "string",
+                  description: "Device name",
+                },
+                topic: {
+                  type: "string",
+                  description: "Device topic",
+                },
+                turn_off_message: {
+                  type: "string",
+                  description: "Device message(for off)",
+                },
+                turn_on_message: {
+                  type: "string",
+                  description: "Device message(for on)"
+                },
+                EN: {
+                  type: "array",
+                  format: 'table',
+                  items: {
+                    type: "string",
+                    description: "alias eng"
+                  },
+
+                  options: {
+                    collapsed: false
+                  }
+                },
+                TH: {
+                  type: "array",
+                  format: 'table',
+                  items: {
+                    type: "string",
+                    description: "alias "
+                  },
+
+                  options: {
+                    collapsed: false
+                  }
+                },
+
+              },
+            }, default: [
+              {
+                name: "light1",
+                topic: "light1/action",
+                EN: ["light",],
+                TH: ["ไฟ", "หลอดไฟ"],
+              }
+            ],
+          },
+          intent: {
+            options: {
+              collapsed: true
+            },
+            type: "object",
+            title: "intent",
+            properties: {
+
+              turn_off: {
+                type: "object",
+                title: "turn_off",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["off", "close", "turn"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["ปิด"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              }, turn_on: {
+                type: "object",
+                title: "turn_on",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["on", "open", "turn on"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["เปิด"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              }, settemp: {
+                type: "object",
+                title: "settemp",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["temp", "temperature"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: [
+                      "ตั้งอุณหภูมิ",
+                      "ปรับ",
+                      "อุณหภูมิ"
+                    ],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              },
+              setmode: {
+                type: "object",
+                title: "setmode",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["mode"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: [
+                      "ตั้งโหมด",
+                      "ปรับโหมด",
+                      "โหมด"
+                    ],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              },
+
+
+              detailDevice: {
+                type: "object",
+                title: "detailDevice",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["detail"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["รายละเอียด"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              }, greeting: {
+                type: "object",
+                title: "greeting",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["hello", "hi"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["สวัสดี", "ดีคับ", "หวัดดี"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              },
+              help: {
+                type: "object",
+                title: "help",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["help"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["ทำอะไรได้บ้าง", "ทำอะไรได้", "ทำไรได้", "ช่วยเหลือ"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              },
+              command: {
+                type: "object",
+                title: "command",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["all command", "command"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["คำสั่งทั้งหมด", "คำสั่ง"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              }, thank: {
+                type: "object",
+                title: "thank",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["thank", "thanks", "thank you", "thank you very much"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["ขอบคุณ", "ขอบคุณครับ", "ขอบคุณค่ะ"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              },
+              maprang: {
+                type: "object",
+                title: "maprang",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["MaPrang", "What is MaPrang"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["มะปราง", "มะปราง คืออะไร"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              }
+            }
+          },
+          responding: {
+            options: {
+              collapsed: true
+            },
+            type: "object",
+            title: "responding",
+            properties: {
+              greeting: {
+                type: "object",
+                title: "greeting",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["Hello", "Hi"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["สวัสดี"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              }, thank: {
+                type: "object",
+                title: "thank",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["My pleasure"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["ยินดีเสมอ"],
+                    options: {
+                      collapsed: false
+                    }
+
+                  }
+                }
+              },
+              sorry: {
+                type: "object",
+                title: "sorry",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["Apologize"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["ขออภัย"],
+                    options: {
+                      collapsed: false
+                    }
+                  }
+                }
+              },
+              help: {
+                type: "object",
+                title: "help",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["You can sent messages to control device (ex. turn on light)\n---'command' all command\n---'device' your device"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["คุณสามารถสั่งงานอุปกรณ์ได้ เช่น พิมพ์ว่า'เปิดไฟ'\n---'command' ดูคำสั่ง\n---'device' ดูอุปกรณ์ของคุณ"],
+                    options: {
+                      collapsed: false
+                    }
+                  }
+                }
+              }, command: {
+                type: "object",
+                title: "command",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["all command \n turn on light \n turn off light  \n set temperature \n state \n detail"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["คำสั่งทั้งหมด \n เปิดไฟ \n ปิดไฟ \n ตั้งอุณหภูมิ \n สถานะ \n รายละเอียด"],
+                    options: {
+                      collapsed: false
+                    }
+                  }
+                }
+              },
+              no_permission: {
+                type: "object",
+                title: "no_permission",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["I apologized, You don't have the right, Kindly contact our admin."],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["ขออภัย คุณไม่มีสิทธิ์ใช้งานกรุณาติดต่อผู้ดูแลระบบ"],
+                    options: {
+                      collapsed: false
+                    }
+                  }
+                }
+              },
+              unknown: {
+                type: "object",
+                title: "unknown",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["I apologized, I don't understand command."],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["ขออภัย ไม่เข้าใจคำสั่ง"],
+                    options: {
+                      collapsed: false
+                    }
+                  }
+                }
+              },
+              declined: {
+                type: "object",
+                title: "declined",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["I apologized, Your request is declined."],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["ขออภัย คำขอของคุณถูกปฏิเสธ"],
+                    options: {
+                      collapsed: false
+                    }
+                  }
+                }
+              },
+              maprang: {
+                type: "object",
+                title: "maprang",
+                properties: {
+                  EN: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["MaPrang is chatbot"],
+                    options: {
+                      collapsed: false
+                    }
+                  }, TH: {
+                    type: "array",
+                    format: 'table',
+                    items: {
+                      type: "string"
+                    },
+                    default: ["มะปราง คือ แชทบอท"],
+                    options: {
+                      collapsed: false
+                    }
+                  }
+                }
+              },
+            }
+          }
+        }
+      }
+
+      var data = {};
+      var jsoneditor = null;
+      var build = document.querySelector("#build");
+      var head = document.getElementsByTagName("head")[0];
+      var iconlibLink = document.querySelector("#iconlib-link");
+      var jsonEditorForm = document.querySelector("#json-editor-form");
+      var themeLink = document.querySelector("#theme-link");
+
+
+      var parseUrl = function () {
+        var url = window.location.search;
+        var queryParamsString = url.substring(1, url.length);
+        var queryParams = queryParamsString.split("&");
+
+        if (queryParamsString.length) {
+          queryParams.forEach(function (queryParam) {
+            var splittedParam = queryParam.split("=");
+            var param = splittedParam[0];
+            var value = splittedParam[1];
+            // console.log(value);
+            // console.log(param);
+
+            // data query param
+            if (param === "data") {
+              try {
+                data = JSON.parse(LZString.decompressFromBase64(value));
+
+              } catch (reason) { }
+            }
+          });
+        }
+        mergeOptions();
+      };
+
+      var mergeOptions = async function () {
+        // var val = await fetch("/read");
+        // val = await val.json();
+        // console.log(val)
+        var defaultOptions = {
+          iconlib: "fontawesome5",
+          object_layout: "normal",
+          schema: defaultSchema,
+          show_errors: "interaction",
+          theme: "bootstrap4",
+         // startval: val
+        };
+        data.options = Object.assign(defaultOptions, data.options,);
+        // console.log(data.options)
+        refreshUI();
+      };
+
+
+      var refreshUI = function () {
+        themeLink.href =
+          "https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css";
+        iconlibLink.href =
+          "https://use.fontawesome.com/releases/v5.6.1/css/all.css";
+        initJsoneditor();
+      };
+
+
+      var initJsoneditor = function () {
+        if (jsoneditor) {
+          jsoneditor.destroy();
+        }
+        jsoneditor = new window.JSONEditor(jsonEditorForm, data.options)
+        jsoneditor.on("change", function () {
+          var json = jsoneditor.getValue();
+        })
+      };
+
+
+      var buildJson = function () {
+        var json = jsoneditor.getValue();
+        var url = window.location.href.replace(/\?.*/, "");
+        url += "/data/";
+        url += LZString.compressToBase64(JSON.stringify(json, null, 2))
+        build.href = url;
+      };
+
+
+      build.addEventListener('click', function () {
+        buildJson()
+      })
+
+
+      parseUrl();
+    </script>
+</body>
+
+</html>
